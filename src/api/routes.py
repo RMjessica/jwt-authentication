@@ -15,9 +15,7 @@ def create_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     # password = hash(password)
-
     # user = User.query.filter_by(email=email, password=password).first()
-
     # if user is not None:
     #      access_token = create_access_token(identity=email)
     # return jsonify(access_token=access_token)
@@ -27,6 +25,16 @@ def create_token():
 
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token)
+
+
+@api.route("/hello", methods=["GET"])
+@jwt_required()
+def get_hello():
+    
+    dictionary = { "msg" : "hello world" }
+
+    return jsonify(dictionary)
+
 
 """@api.route('/token', methods=['POST'])
 def create_token():

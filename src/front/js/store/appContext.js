@@ -20,7 +20,9 @@ const injectContext = (PassedComponent) => {
       })
     );
 
-    useEffect(() => {}, []);
+    useEffect(() => {
+      state.actions.syncToken();
+    }, []);
 
     return (
       <Context.Provider value={state}>

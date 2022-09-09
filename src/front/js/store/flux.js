@@ -43,6 +43,25 @@ const getState = ({ getStore, getActions, setStore }) => {
         sessionStorage.removeItem("token");
         localStorage.removeItem("token");
         setStore({ authenticated: false });
+        setStore({ token: null });
+      },
+      syncToken: () => {
+        const token = sessionStorage.getItem("token");
+        if (token && token != "" && token != undefined)
+          setStore({ token: token });
+      },
+      appendToken: () => {
+        const store = getStore();
+        const opts = {
+          headers: {
+            Authorization: "Bearer " + store.token,
+          },
+        };
+
+        fetch(process.env.BACKEND_URL + "/api/hello", opts)
+          .then((resp) => resp.json())
+          .then((data) => setStore({ msg: data.msg }))
+          .catch((error) => console.log("Error in appendToken "));
       },
     },
   };
