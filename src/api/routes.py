@@ -14,16 +14,14 @@ api = Blueprint('api', __name__)
 def create_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    user = User.query.filter_by(email=email, password=password).first()
 
-    if user is None:
-        return jsonify({"msg": "User does not exist"}), 404
-  
-    if email != user.email or not current_app.bcrypt.check_password_hash(
+    user = User.query.filter_by(email=email).first()
+
+    if user is None or not current_app.bcrypt.check_password_hash(
         user.password, password
     ):
-      return jsonify({"msg": "Bad username or password"}), 401
-
+        return jsonify({"msg": "Bad username or password"}), 401
+  
     access_token = create_access_token(identity=email)
     return jsonify(access_token)
 
@@ -44,7 +42,6 @@ def handle_signup():
     body = json.loads(request.data) 
     
     hashed = current_app.bcrypt.generate_password_hash(body["password"]).decode('utf-8')
-    print(hashed)
    
     body = {
         x: body[x]

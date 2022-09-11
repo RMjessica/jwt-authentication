@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link, Navigate } from "react-router-dom";
 
@@ -20,7 +20,7 @@ export const Signup = () => {
   return (
     <>
       {store.authenticated ? (
-        <Navigate to={"/"} />
+        <Navigate to="/login" />
       ) : (
         <div className="container text-center my-4">
           <section className="background-radial-gradient overflow-hidden">

@@ -16,7 +16,7 @@ export const Login = () => {
   return (
     <>
       {store.authenticated ? (
-        <Navigate to={"/"} />
+        <Navigate to="/" />
       ) : (
         <div className="container text-center my-4">
           <section className="background-radial-gradient overflow-hidden">

@@ -12,20 +12,24 @@ export const Home = () => {
 
   return (
     <>
-      {store.authenticated ? (
-        <h1 className="text-center m-5 p-5">WELCOME! You have logged in :)</h1>
-      ) : (
-        <h1 className="text-center m-5 p-5">
-          WELCOME!{" "}
-          <Link
-            to="/login"
-            className="text-decoration-none"
-            style={{ color: "hsl(220, 73%, 65%)" }}
-          >
-            Click here to access :)
-          </Link>
-        </h1>
-      )}
+      <div className="container" style={{ height: "550px" }}>
+        {store.authenticated ? (
+          <h1 className="text-center m-5 p-5">
+            WELCOME! You have logged in :)
+          </h1>
+        ) : (
+          <h1 className="text-center m-5 p-5">
+            WELCOME!{" "}
+            <Link
+              to="/login"
+              className="text-decoration-none"
+              style={{ color: "hsl(220, 73%, 65%)" }}
+            >
+              Click here to access :)
+            </Link>
+          </h1>
+        )}
+      </div>
     </>
   );
 };
