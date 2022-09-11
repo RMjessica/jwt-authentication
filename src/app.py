@@ -12,7 +12,7 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
-#from models import Person
+from flask_bcrypt import Bcrypt
 
 ENV = os.getenv("FLASK_ENV")
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
@@ -41,6 +41,10 @@ setup_admin(app)
 
 # add the admin
 setup_commands(app)
+
+# bcrypt config
+bcrypt = Bcrypt(app)
+app.bcrypt = bcrypt
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')

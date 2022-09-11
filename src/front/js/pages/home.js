@@ -6,8 +6,9 @@ export const Home = () => {
   const { store, actions } = useContext(Context);
 
   useEffect(() => {
-    actions.appendToken();
-  }, []);
+    if (store.token && store.token != "" && store.token != "undefined")
+      actions.appendToken();
+  }, [store.token]);
 
   return (
     <>
@@ -19,7 +20,7 @@ export const Home = () => {
           <Link
             to="/login"
             className="text-decoration-none"
-            style={{ color: "#ad1fff" }}
+            style={{ color: "hsl(220, 73%, 65%)" }}
           >
             Click here to access :)
           </Link>

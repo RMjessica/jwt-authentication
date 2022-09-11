@@ -14,65 +14,52 @@ api = Blueprint('api', __name__)
 def create_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    # password = hash(password)
-    # user = User.query.filter_by(email=email, password=password).first()
-    # if user is not None:
-    #      access_token = create_access_token(identity=email)
-    # return jsonify(access_token=access_token)
+    user = User.query.filter_by(email=email, password=password).first()
 
-    if email != "test" or password != "test":
+    if user is None:
+        return jsonify({"msg": "User does not exist"}), 404
+  
+    if email != user.email or not current_app.bcrypt.check_password_hash(
+        user.password, password
+    ):
       return jsonify({"msg": "Bad username or password"}), 401
 
     access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token)
+    return jsonify(access_token)
 
 
-@api.route("/hello", methods=["GET"])
+@api.route("/private", methods=["GET"])
 @jwt_required()
-def get_hello():
+def private():
     
-    dictionary = { "msg" : "hello world" }
+    email = get_jwt_identity()
+    user = User.query.filter_by(email=email).first()
+    dictionary = { "msg" : "hello world " + email }
 
     return jsonify(dictionary)
 
 
-"""@api.route('/token', methods=['POST'])
-def create_token():
-        email = request.json.get("email", None)
-        password = request.json.get("password", None)
-
-        if not email:
-            return "Missing email", 400
-        if not password:
-            return "Missing password", 400
-    
-        pw_hash = bcrypt.generate_password_hash("elDecodifier").decode("utf-8")
-        bcrypt.check_password_hash(pw_hash, "elDecodifier")
-
-    return ("msg: ", "Token authorized"), 200 """
-
-
-
-
-
-
-
-
-
-
-
-@api.route("/register", methods=["POST"])
-def handle_registration():
+@api.route("/signup", methods=["POST"])
+def handle_signup():
     body = json.loads(request.data) 
     
     hashed = current_app.bcrypt.generate_password_hash(body["password"]).decode('utf-8')
-    print(hashed_password)
-    
-    user = User(email = body["email"], password = hashed)
-    print(user)
+    print(hashed)
+   
+    body = {
+        x: body[x]
+        for x in [
+            "first_name",
+            "last_name",
+            "email",
+        ]
+    }
+
+    user = User(password=hashed, **body)
+
     db.session.add(user)
     db.session.commit()
     response_body = {
-        "results": "Usuario añadido correctamente"
+        "msg": "User account created successfully"
     }
     return jsonify(response_body), 200

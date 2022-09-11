@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { Link, Navigate } from "react-router-dom";
 import "../../styles/login.css";
 
 export const Login = () => {
@@ -94,8 +94,8 @@ export const Login = () => {
                           Log in
                         </button>
 
-                        <Link to="/register" className="text-decoration-none">
-                          <div>Don't have an account? Register </div>
+                        <Link to="/signup" className="text-decoration-none">
+                          <div>Don't have an account? Sign up </div>
                         </Link>
 
                         <div className="text-center visually-hidden">
