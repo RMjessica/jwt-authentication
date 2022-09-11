@@ -1,4 +1,4 @@
-# :sparkles: Login/Register Flow 
+# :sparkles: Login/Register Fullstack Flow 
 
 
 https://user-images.githubusercontent.com/88908436/189548182-9bfe3228-8706-4092-aef3-746ec01ca65f.mp4
